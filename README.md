@@ -58,7 +58,7 @@ Transactions peak mid-week (Tuesday–Thursday) and during business hours (10am�
 ![Day/Hour Patterns](images/eda_charts/day_hour_patterns.png)
 
 ### Top Products
-Revenue is driven by high-volume items (PAPER CRAFT, MEDIUM CERAMIC JAR) rather than premium products, indicating a volume-based business model.
+Revenue is driven by high-volume items (PAPER CRAFT, MEDIUM CERAMIC JAR) rather than premium products, indicating a volume-based business model. The #1 product by both quantity and revenue is heavily influenced by a single **bulk order of 80,995 units** (wholesale outlier); excluding that order, `REGENCY CAKESTAND 3 TIER` emerges as the top revenue product and better represents typical demand.
 
 ![Top Products by Revenue](images/eda_charts/top_products_revenue.png)
 
@@ -203,7 +203,11 @@ customer-segmentation-retention-analytics/
 │   └── 02_rfm.sql               # Full RFM segmentation in SQL
 │
 ├── tests/
-│   └── test_cleaning.py         # Unit tests for data cleaning
+│   ├── test_cleaning.py         # Unit tests for data cleaning helpers
+│   ├── test_rfm.py              # Unit tests for RFM scoring and segments
+│   ├── test_cohort.py           # Unit tests for cohort + retention KPIs
+│   ├── test_clustering.py       # Unit tests for clustering prep/profiling
+│   └── test_visualizations_and_pipeline.py  # Smoke tests + small pipeline integration
 │
 └── images/
     ├── eda_charts/              # Generated EDA and analysis charts (16 PNGs)
