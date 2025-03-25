@@ -12,6 +12,12 @@ data/featured/*
 *.pkl
 *.xlsx
 
+# Databases
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.db
+
 # Python
 __pycache__/
 *.py[cod]
@@ -35,3 +41,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Local caches created by SQL viz pipeline / matplotlib
+.cache/
+.mplconfig/
