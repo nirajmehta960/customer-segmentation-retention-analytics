@@ -7,7 +7,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.rfm_analysis import (
+from src.python_pipeline.rfm_analysis import (
     compute_rfm,
     score_quartiles,
     assign_segment,

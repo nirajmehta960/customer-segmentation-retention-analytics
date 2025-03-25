@@ -6,14 +6,14 @@ Uses default paths under data/raw, data/preprocessed, data/featured.
 import os
 import sys
 
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from src.data_cleaning import run_cleaning_pipeline, DEFAULT_PREPROCESSED_PATH
-from src.rfm_analysis import run_rfm_pipeline, DEFAULT_FEATURED_PATH
-from src.cohort_analysis import run_cohort_pipeline
-from src.clustering import run_clustering_pipeline
+from src.python_pipeline.data_cleaning import run_cleaning_pipeline, DEFAULT_PREPROCESSED_PATH
+from src.python_pipeline.rfm_analysis import run_rfm_pipeline, DEFAULT_FEATURED_PATH
+from src.python_pipeline.cohort_analysis import run_cohort_pipeline
+from src.python_pipeline.clustering import run_clustering_pipeline
 
 
 def run_pipeline(

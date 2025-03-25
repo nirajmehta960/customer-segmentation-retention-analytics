@@ -10,7 +10,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DEFAULT_RFM_PATH = os.path.join(_PROJECT_ROOT, "data", "featured", "customer_rfm.csv")
 DEFAULT_CLUSTER_OUTPUT_PATH = os.path.join(_PROJECT_ROOT, "data", "featured", "customer_rfm_clusters.csv")
 DEFAULT_ELBOW_OUTPUT_PATH = os.path.join(_PROJECT_ROOT, "data", "featured", "elbow_silhouette.csv")

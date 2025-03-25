@@ -7,7 +7,7 @@ import os
 import pandas as pd
 import numpy as np
 
-_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DEFAULT_PREPROCESSED_PATH = os.path.join(_PROJECT_ROOT, "data", "preprocessed", "online_retail_preprocessed.csv")
 DEFAULT_FEATURED_PATH = os.path.join(_PROJECT_ROOT, "data", "featured", "customer_rfm.csv")
 DEFAULT_PROFILE_PATH = os.path.join(_PROJECT_ROOT, "data", "featured", "segment_profiles.csv")

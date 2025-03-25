@@ -6,12 +6,12 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src import visualizations as viz
+from src.python_pipeline import visualizations as viz
 import matplotlib
 
 # Use a non-interactive backend suitable for headless test environments
 matplotlib.use("Agg")
-from src.run_data_pipeline import run_pipeline
+from src.python_pipeline.run_pipeline import run_pipeline
 
 
 def _make_small_preprocessed_df():
@@ -96,10 +96,10 @@ def test_run_pipeline_on_real_data(tmp_path, monkeypatch):
     featured_dir.mkdir()
     preprocessed_dir.mkdir()
 
-    from src import data_cleaning as dc
-    from src import rfm_analysis as rfm_mod
-    from src import cohort_analysis as cohort_mod
-    from src import clustering as clust_mod
+    from src.python_pipeline import data_cleaning as dc
+    from src.python_pipeline import rfm_analysis as rfm_mod
+    from src.python_pipeline import cohort_analysis as cohort_mod
+    from src.python_pipeline import clustering as clust_mod
 
     dc.DEFAULT_RAW_PATH = raw_path
     dc.DEFAULT_PREPROCESSED_PATH = str(preprocessed_dir / "online_retail_preprocessed.csv")

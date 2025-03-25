@@ -6,7 +6,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.cohort_analysis import (
+from src.python_pipeline.cohort_analysis import (
     assign_cohort_and_index,
     retention_heatmap_data,
     summarize_retention,

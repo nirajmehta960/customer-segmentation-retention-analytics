@@ -11,7 +11,7 @@ import sys
 # Project root
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.data_cleaning import (
+from src.python_pipeline.data_cleaning import (
     remove_cancellations,
     remove_negative_quantity,
     remove_non_positive_unitprice,

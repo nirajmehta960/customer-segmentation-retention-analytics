@@ -6,7 +6,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.clustering import (
+from src.python_pipeline.clustering import (
     prepare_rfm_for_clustering,
     find_optimal_k,
     fit_kmeans,
