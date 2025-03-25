@@ -96,6 +96,27 @@ Frequency vs Monetary bubble chart shows Champions and Loyal Customers clearly s
 
 ---
 
+## SQL-based ETL (SQLite)
+
+This repo also includes a **SQL-first ETL pipeline** (modeled after the diabetes readmission project) that builds curated layers in SQLite:
+
+- **staging**: `stg_transactions`
+- **dimensions**: `dim_customer`, `dim_country`, `dim_product`
+- **facts**: `fct_transactions`, `fct_customer_rfm`
+- **marts (views)**: `mart_kpis`, `mart_segment_summary`, `mart_revenue_by_country`, `mart_cohort_retention_input`
+
+### Run
+
+Load the cleaned CSV into SQLite as `online_retail`, then run the ordered ETL scripts and generate SQL-based charts.
+
+```bash
+./venv/bin/python -m src.sql_pipeline.load_raw
+./venv/bin/python -m src.sql_pipeline.run_etl
+./venv/bin/python -m src.sql_pipeline.run_viz
+```
+
+The database will be created at `data/retail.sqlite`.
+
 ## K-Means Clustering (ML Validation)
 
 ### Elbow Method & Silhouette Score
@@ -190,17 +211,33 @@ customer-segmentation-retention-analytics/
 │   └── 06_insights_strategy.ipynb  # Pareto, revenue at risk, strategies
 │
 ├── src/
-│   ├── __init__.py
-│   ├── data_cleaning.py         # Load Excel, remove cancellations/null IDs, add Revenue/YearMonth
-│   ├── rfm_analysis.py          # Recency, Frequency, Monetary; quartile scoring; segments
-│   ├── cohort_analysis.py       # Cohort and retention heatmap data
-│   ├── clustering.py            # K-Means on log-scaled RFM with elbow/silhouette
-│   ├── run_data_pipeline.py     # Run cleaning → RFM → cohort → clustering
-│   └── visualizations.py        # 16 chart types for segments, retention, products, etc.
+│   ├── python_pipeline/         # Pandas-based automation
+│   │   ├── data_cleaning.py
+│   │   ├── rfm_analysis.py
+│   │   ├── cohort_analysis.py
+│   │   ├── clustering.py
+│   │   ├── visualizations.py
+│   │   └── run_pipeline.py      # Run cleaning → RFM → cohort → clustering
+│   │
+│   ├── sql_pipeline/            # SQL-first automation (SQLite)
+│   │   ├── load_raw.py          # Load preprocessed CSV into SQLite
+│   │   ├── run_etl.py           # Execute Medallion SQL scripts
+│   │   └── run_viz.py           # Generate charts from SQL Mart views
+│   │
+│   └── __init__.py
 │
 ├── sql/
-│   ├── 01_data_profiling.sql    # SQL profiling queries
-│   └── 02_rfm.sql               # Full RFM segmentation in SQL
+│   ├── profiling/               # Ad-hoc profiling & standalone scripts
+│   │   ├── data_profiling.sql
+│   │   └── rfm_standalone.sql
+│   │
+│   └── etl/                     # Medallion SQL ETL scripts (00-50)
+│       ├── 00_init.sql
+│       ├── 10_staging.sql
+│       ├── 20_dimensions.sql
+│       ├── 30_facts.sql
+│       ├── 40_marts.sql
+│       └── 50_validation.sql
 │
 ├── tests/
 │   ├── test_cleaning.py         # Unit tests for data cleaning helpers
@@ -211,6 +248,7 @@ customer-segmentation-retention-analytics/
 │
 └── images/
     ├── eda_charts/              # Generated EDA and analysis charts (16 PNGs)
+    ├── sql_marts/               # Charts generated directly from SQL Marts
     └── tableau/                 # Tableau dashboard screenshots
 ```
 
@@ -258,24 +296,32 @@ pip install -r requirements.txt
 
 ### 5. Run the Analysis
 
-**Option A: Full pipeline (recommended)**
+**Option A: Full Python pipeline (recommended)**
 
 From the project root:
 
 ```bash
-python src/run_data_pipeline.py
+python -m src.python_pipeline.run_pipeline
 ```
 
 This runs: cleaning → preprocessed CSV → RFM → segment profiles → cohort retention → elbow/silhouette → K-Means clusters.
 
-**Option B: Run step-by-step**
+**Option B: SQL-first pipeline**
 
-- Cleaning only: `python src/data_cleaning.py`
-- RFM only (after cleaning): `python src/rfm_analysis.py`
-- Cohort only: `python src/cohort_analysis.py`
-- Clustering only (after RFM): `python src/clustering.py`
+```bash
+python -m src.sql_pipeline.load_raw
+python -m src.sql_pipeline.run_etl
+python -m src.sql_pipeline.run_viz
+```
 
-**Option C: Run via Jupyter Notebooks**
+**Option C: Run individual scripts**
+
+- Cleaning: `python -m src.python_pipeline.data_cleaning`
+- RFM: `python -m src.python_pipeline.rfm_analysis`
+- Cohort: `python -m src.python_pipeline.cohort_analysis`
+- Clustering: `python -m src.python_pipeline.clustering`
+
+**Option D: Run via Jupyter Notebooks**
 
 ```bash
 jupyter lab
